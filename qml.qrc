@@ -8,5 +8,10 @@
         <file>res/Icons/iconRaw.png</file>
         <file>src/View/Elements/GlassPanel.qml</file>
         <file>src/View/Elements/WText.qml</file>
+        <file>src/View/Panels/GameAnswers.qml</file>
+        <file>src/View/Panels/GuessedLetters.qml</file>
+        <file>src/View/Panels/IncorrectLetters.qml</file>
+        <file>src/View/Panels/SolvedLetters.qml</file>
+        <file>src/View/Panels/WKeyboard.qml</file>
     </qresource>
 </RCC>

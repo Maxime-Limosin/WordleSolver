@@ -3,11 +3,12 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.3
 
 import "Elements"
+import "Panels"
 
 Window {
     id: win
     width: 1280
-    height: 720
+    height: 850
     visible: true
     title: "WordleSolver 🕵️‍"
 
@@ -27,62 +28,22 @@ Window {
         anchors.fill: parent
         anchors.margins: 50
 
-        // Solved letters
-        ColumnLayout {
-            WText {
-                text: "Solved letters"
-            }
-
-            GlassPanel {
-                Layout.topMargin: 10
-                Layout.preferredHeight: 200
-                Layout.preferredWidth: 400
-            }
+        SolvedLetters {
         }
 
-        // Found letters
-        ColumnLayout {
+        GuessedLetters {
             Layout.rowSpan: 2
-
-            WText {
-                text: "Found letters"
-            }
-
-            GlassPanel {
-                Layout.fillHeight: true
-                Layout.preferredWidth: 200
-            }
         }
 
-        // Answers
-        ColumnLayout {
+        GameAnswers {
             Layout.rowSpan: 3
-
-            WText {
-                text: "Answers"
-            }
-
-            GlassPanel {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                Layout.minimumWidth: 200
-            }
         }
 
-        // Incorrect letters
-        ColumnLayout {
-            WText {
-                text: "Incorrect letters"
-            }
+        IncorrectLetters {
 
-            GlassPanel {
-                Layout.preferredHeight: 200
-                Layout.preferredWidth: 400
-            }
         }
 
-        // Keyboard
-        GlassPanel {
+        WKeyboard {
             Layout.columnSpan: 2
             Layout.preferredHeight: 200
             Layout.preferredWidth: 600
