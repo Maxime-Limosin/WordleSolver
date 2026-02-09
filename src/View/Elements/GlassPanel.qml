@@ -3,8 +3,8 @@ import QtGraphicalEffects 1.15
 
 Item {
     // Panel style properties
-    property int blurRadius: 28
-    property int cornerRadius: 18
+    property int blurRadius: 50
+    property int cornerRadius: 20
     property color glassColor: "#22FFFFFF"
     property color glassBorderColor: "#33FFFFFF"
     property color shadowColor: "#14000000"
@@ -18,7 +18,13 @@ Item {
         live: true
         recursive: false
         hideSource: false
-        sourceRect: Qt.rect(parent.x, parent.y, parent.width, parent.height)
+        sourceRect: {
+                const p = parent.mapToItem(
+                    parent.backgroundItem,
+                    0, 0
+                )
+                return Qt.rect(p.x, p.y, parent.width, parent.height)
+            }
     }
 
     // Blur the background, but in a rectangurlar shape
