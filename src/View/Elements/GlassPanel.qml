@@ -11,9 +11,7 @@ Item {
 
     property Item backgroundItem: blurryBg // Background to blurry with graphical effetcs
 
-    clip: true
-
-    // Compute the area that should be blur
+    // Compute the area that should be blured
     ShaderEffectSource {
         id: bgCrop
         sourceItem: parent.backgroundItem
@@ -23,18 +21,35 @@ Item {
         sourceRect: Qt.rect(parent.x, parent.y, parent.width, parent.height)
     }
 
-    // Blur the background
+    // Blur the background, but in a rectangurlar shape
     FastBlur {
+        id: blurItem
         anchors.fill: parent
         source: bgCrop
-        radius: parent.blurRadius
+        radius: blurRadius
         transparentBorder: true
+        visible: false // We don't want to display this rectangle but the mask
+    }
+
+    // Create a mask with round corners
+    Rectangle {
+        id: roundedMask
+        anchors.fill: parent
+        radius: cornerRadius
+        visible: false
+    }
+
+    // Add the blured background into a rectangle with round corners
+    OpacityMask {
+        anchors.fill: parent
+        source: blurItem
+        maskSource: roundedMask
     }
 
     // Create the glass aspect
     Rectangle {
         anchors.fill: parent
-        radius: parent.cornerRadius
+        radius:cornerRadius
         color: glassColor
         border.color: glassBorderColor
         border.width: 1
@@ -43,7 +58,7 @@ Item {
     // Add little shadows (cause it looks great)
     Rectangle {
         anchors.fill: parent
-        radius: parent.cornerRadius
+        radius: cornerRadius
         color: shadowColor
     }
 }

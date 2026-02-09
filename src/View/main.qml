@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.3
+
+import "Elements"
 
 Window {
     id: win
@@ -17,26 +19,73 @@ Window {
         z: -100
     }
 
-    GlassPanel {
-        anchors.centerIn: parent
-        width: 700
-        height: 400
+    GridLayout {
+        columns: 3
+        columnSpacing: 30
+        rowSpacing: 30
 
-        Column {
-            anchors.fill: parent
-            anchors.margins: 22
-            spacing: 8
+        anchors.fill: parent
+        anchors.margins: 50
 
-            Text {
-                text: "Teeeeest"
-                color: "white"
-                font.pointSize: 20
-                font.bold: true
+        // Solved letters
+        ColumnLayout {
+            WText {
+                text: "Solved letters"
             }
-            Text {
-                text: "This is a test bla bla blaaaaaaaaaaaaaaaa"
-                color: "white"
+
+            GlassPanel {
+                Layout.topMargin: 10
+                Layout.preferredHeight: 200
+                Layout.preferredWidth: 400
             }
+        }
+
+        // Found letters
+        ColumnLayout {
+            Layout.rowSpan: 2
+
+            WText {
+                text: "Found letters"
+            }
+
+            GlassPanel {
+                Layout.fillHeight: true
+                Layout.preferredWidth: 200
+            }
+        }
+
+        // Answers
+        ColumnLayout {
+            Layout.rowSpan: 3
+
+            WText {
+                text: "Answers"
+            }
+
+            GlassPanel {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.minimumWidth: 200
+            }
+        }
+
+        // Incorrect letters
+        ColumnLayout {
+            WText {
+                text: "Incorrect letters"
+            }
+
+            GlassPanel {
+                Layout.preferredHeight: 200
+                Layout.preferredWidth: 400
+            }
+        }
+
+        // Keyboard
+        GlassPanel {
+            Layout.columnSpan: 2
+            Layout.preferredHeight: 200
+            Layout.preferredWidth: 600
         }
     }
 }

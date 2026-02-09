@@ -3,9 +3,10 @@
         <file>res/background.png</file>
         <file>src/View/main.qml</file>
         <file>src/View/AppBackground.qml</file>
-        <file>src/View/GlassPanel.qml</file>
         <file>res/Icons/icon.png</file>
         <file>res/Icons/icon2Raw.png</file>
         <file>res/Icons/iconRaw.png</file>
+        <file>src/View/Elements/GlassPanel.qml</file>
+        <file>src/View/Elements/WText.qml</file>
     </qresource>
 </RCC>
