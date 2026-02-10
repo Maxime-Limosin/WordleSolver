@@ -4,24 +4,26 @@ import QtQuick.Controls 2.5
 TextField {
     id: field
 
-    property color backgroundColor: "white"
-    property color backgroundColorWhenLetterFilled: "limegreen"
-    //property color borderColor: "darkolivegreen"
-    property color borderColor: "black"
+    readonly property color backgroundColor: "#6A7D81"
+    readonly property color backgroundColorWhenLetterFilled: "#92EC13"
+    readonly property color borderColor: "#242424"
 
+    property bool textFilled: text.length === 1
 
     width: 40
     height: 60
     hoverEnabled: true
+    font.pointSize: 20
 
     // Center text
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
-    font.pointSize: 20
     topPadding: 0
     bottomPadding: 0
     leftPadding: 0
     rightPadding: 0
+
+    scale: field.activeFocus ? 1 :field.hovered ? 0.95 : 0.9
 
     // Only allow one letter
     maximumLength: 1
@@ -34,15 +36,18 @@ TextField {
     // Create the background
     background: Rectangle {
         radius: field.width / 2
-        border.width: field.activeFocus ? 2 : 0
-        border.color: borderColor // Emphasize the selected TextField (as the cursor is disabled)
+        opacity: 0.8
 
         color: {
-            let color = (text.length === 0 ? backgroundColor : backgroundColorWhenLetterFilled)
+            if(textFilled)
+                return backgroundColorWhenLetterFilled
 
-            // Add a small dark effect when the TextField hovered
-            if(field.hovered)
-                color = Qt.darker(color, 1.3)
+            let color = backgroundColor
+            if(field.activeFocus)
+                color = Qt.lighter(color, 1.4)
+
+            else if(field.hovered)
+                color = Qt.lighter(color, 1.2)
 
             return color
         }
@@ -52,11 +57,12 @@ TextField {
                 duration: 200
             }
         }
+    }
 
-        Behavior on border.width {
-            NumberAnimation {
-                duration: 200
-            }
+    Behavior on scale {
+        NumberAnimation {
+            duration: 200
+            easing.type: Easing.OutQuad
         }
     }
 
