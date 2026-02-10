@@ -1,16 +1,16 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.3
-
 import "../Elements"
 
-ColumnLayout {
+Item {
+    property int titleMargin: 10
+
     WText {
-        text: "Answers"
+        id: title
+        text: "Possible answers"
     }
 
     GlassPanel {
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        Layout.minimumWidth: 200
+        anchors.fill: parent
+        anchors.topMargin: title.height + titleMargin
     }
 }

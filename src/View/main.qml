@@ -6,9 +6,8 @@ import "Elements"
 import "Panels"
 
 Window {
-    id: win
-    width: 1280
     height: 850
+    width: 1280
     visible: true
     title: "WordleSolver 🕵️‍"
 
@@ -29,18 +28,27 @@ Window {
         anchors.margins: 50
 
         SolvedLetters {
+            Layout.preferredHeight: 200
+            Layout.preferredWidth: 400
         }
 
         GuessedLetters {
             Layout.rowSpan: 2
+            Layout.alignment: Qt.AlignTop
+            Layout.preferredHeight: 400
+            Layout.preferredWidth: 400
         }
 
         GameAnswers {
             Layout.rowSpan: 3
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.minimumWidth: 200
         }
 
         IncorrectLetters {
-
+            Layout.preferredHeight: 200
+            Layout.preferredWidth: 400
         }
 
         WKeyboard {
