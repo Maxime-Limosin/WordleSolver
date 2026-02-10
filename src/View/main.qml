@@ -6,12 +6,20 @@ import "Elements"
 import "Panels"
 
 Window {
-    height: 850
-    width: 1280
     visible: true
     title: "WordleSolver 🕵️‍"
 
+    // Window dimensions
+    height: 740
+    width: 1150
+    minimumHeight: 740
+    minimumWidth: 1150
+    maximumHeight: 1400
+    maximumWidth: 2240
+
     property alias blurryBg: appBg.backgroundItem // Allow every GlassPanel to properly blurry the background
+
+    readonly property int panelSpacing: 30
 
     AppBackground {
         id: appBg
@@ -19,42 +27,53 @@ Window {
         z: -100
     }
 
-    GridLayout {
-        columns: 3
-        columnSpacing: 30
-        rowSpacing: 30
-
+    RowLayout {
         anchors.fill: parent
         anchors.margins: 50
+        spacing: panelSpacing
 
-        SolvedLetters {
-            Layout.preferredHeight: 200
-            Layout.preferredWidth: 400
-        }
-
-        GuessedLetters {
-            Layout.rowSpan: 2
+        ColumnLayout {
             Layout.alignment: Qt.AlignTop
-            Layout.preferredHeight: 400
-            Layout.preferredWidth: 400
+            spacing: panelSpacing
+
+            RowLayout {
+                id: lettresRow
+                spacing: panelSpacing
+
+                ColumnLayout {
+                    Layout.alignment: Qt.AlignTop
+                    Layout.fillHeight: true
+                    spacing: panelSpacing
+
+                    SolvedLetters {
+                        Layout.preferredHeight: 200
+                        Layout.preferredWidth: 400
+                    }
+
+                    IncorrectLetters {
+                        Layout.fillHeight: true
+                        Layout.minimumHeight: 200
+                        Layout.preferredWidth: 400
+                    }
+                }
+
+                GuessedLetters {
+                    Layout.alignment: Qt.AlignTop
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: 400
+                }
+            }
+
+            WKeyboard {
+                Layout.preferredHeight: 200
+                Layout.preferredWidth: lettresRow.width
+            }
         }
 
         GameAnswers {
-            Layout.rowSpan: 3
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.minimumWidth: 200
-        }
-
-        IncorrectLetters {
-            Layout.preferredHeight: 200
-            Layout.preferredWidth: 400
-        }
-
-        WKeyboard {
-            Layout.columnSpan: 2
-            Layout.preferredHeight: 200
-            Layout.preferredWidth: 600
         }
     }
 }

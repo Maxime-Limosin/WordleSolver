@@ -1,15 +1,16 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.3
-
 import "../Elements"
 
-ColumnLayout {
+Item {
+    property int titleMargin: 10
+
     WText {
+        id: title
         text: "Incorrect letters"
     }
 
     GlassPanel {
-        Layout.preferredHeight: 200
-        Layout.preferredWidth: 400
+        anchors.fill: parent
+        anchors.topMargin: title.height + titleMargin
     }
 }
