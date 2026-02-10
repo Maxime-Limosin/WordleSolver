@@ -13,5 +13,6 @@
         <file>src/View/Panels/IncorrectLetters.qml</file>
         <file>src/View/Panels/SolvedLetters.qml</file>
         <file>src/View/Panels/WKeyboard.qml</file>
+        <file>src/View/Elements/LetterField.qml</file>
     </qresource>
 </RCC>
