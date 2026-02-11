@@ -10,9 +10,9 @@ Window {
     title: "WordleSolver 🕵️‍"
 
     // Window dimensions
-    height: 740
+    height: 760
     width: 1150
-    minimumHeight: 740
+    minimumHeight: 760
     minimumWidth: 1150
     maximumHeight: 1400
     maximumWidth: 2240
@@ -46,13 +46,13 @@ Window {
                     spacing: panelSpacing
 
                     SolvedLetters {
-                        Layout.preferredHeight: 200
+                        Layout.preferredHeight: 150
                         Layout.preferredWidth: 400
                     }
 
                     IncorrectLetters {
                         Layout.fillHeight: true
-                        Layout.minimumHeight: 200
+                        Layout.minimumHeight: 280
                         Layout.preferredWidth: 400
                     }
                 }
