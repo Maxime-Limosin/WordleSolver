@@ -1,13 +1,15 @@
 import QtQuick 2.15
 import QtGraphicalEffects 1.15
 
+import "../Theme.js" as Theme
+
 Item {
     // Panel style properties
     property int blurRadius: 50
     property int cornerRadius: 20
-    property color glassColor: "#22FFFFFF"
-    property color glassBorderColor: "#33FFFFFF"
-    property color shadowColor: "#14000000"
+    property color glassColor: Theme.glassColor
+    property color glassBorderColor: Theme.glassBorderColor
+    property color shadowColor: Theme.glassShadow
 
     property Item backgroundItem: blurryBg // Background to blurry with graphical effetcs
 
@@ -19,10 +21,7 @@ Item {
         recursive: false
         hideSource: false
         sourceRect: {
-                const p = parent.mapToItem(
-                    parent.backgroundItem,
-                    0, 0
-                )
+                const p = parent.mapToItem(parent.backgroundItem, 0, 0)
                 return Qt.rect(p.x, p.y, parent.width, parent.height)
             }
     }

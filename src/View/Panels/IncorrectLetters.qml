@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.3
 
 import "../Elements"
+import "../Theme.js" as Theme
 
 Item {
     property int titleMargin: 10
@@ -31,7 +32,7 @@ Item {
             let letterField = component.createObject(gridLayout, {
                                                          "Layout.preferredHeight": 60,
                                                          "Layout.preferredWidth": 40,
-                                                         "backgroundColorWhenLetterFilled": "#ff5757"
+                                                         "backgroundColorWhenLetterFilled": Theme.red
                                                      })
 
             // Add the function after creation

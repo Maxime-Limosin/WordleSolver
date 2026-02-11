@@ -1,12 +1,14 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.5
 
+import "../Theme.js" as Theme
+
 TextField {
     id: field
 
-    property color backgroundColor: "#6A7D81"
-    property color backgroundColorWhenLetterFilled: "#92EC13"
-    property color borderColor: "#242424"
+    property color backgroundColor: Theme.letterFieldBg
+    property color backgroundColorWhenLetterFilled: Theme.letterFieldBg
+    property color borderColor: Theme.letterFieldBorder
 
     property bool textFilled: text.length === 1
 

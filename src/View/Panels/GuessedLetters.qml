@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.3
 
 import "../Elements"
+import "../Theme.js" as Theme
 
 Item {
     property int titleMargin: 10
@@ -42,7 +43,7 @@ Item {
                                                          "Layout.preferredHeight": 60,
                                                          "Layout.preferredWidth": 40,
                                                          "Layout.alignment": Qt.AlignTop,
-                                                         "backgroundColorWhenLetterFilled": "#efba34"
+                                                         "backgroundColorWhenLetterFilled": Theme.orange
                                                      })
 
             // Add the function after creation

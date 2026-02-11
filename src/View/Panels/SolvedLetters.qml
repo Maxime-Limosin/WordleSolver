@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.3
 
 import "../Elements"
+import "../Theme.js" as Theme
 
 Item {
     property int titleMargin: 10
@@ -38,6 +39,7 @@ Item {
                 model: 5
 
                 LetterField {
+                    backgroundColorWhenLetterFilled: Theme.green
                     Layout.preferredHeight: 60
                     Layout.preferredWidth: 40
 

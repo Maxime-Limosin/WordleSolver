@@ -3,28 +3,23 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import "../Elements"
+import "../Theme.js" as Theme
 
 GlassPanel {
     component Key: LetterField {
         enabled: backgroundColorWhenLetterFilled != backgroundColor
         backgroundColorWhenLetterFilled: {
-            // Check if letter is in guessedLetters (orange)
-            for (var i = 0; i < solvedLetters.length; i++) {
+            for (var i = 0; i < solvedLetters.length; i++)
                 if (solvedLetters[i].letter === text)
-                    return "#92EC13"  // Green
-            }
+                    return Theme.green
 
-            // Check if letter is in guessedLetters (orange)
-            for (var j = 0; j < guessedLetters.length; j++) {
+            for (var j = 0; j < guessedLetters.length; j++)
                 if (guessedLetters[j].letter === text)
-                    return "#efba34"  // Orange
-            }
+                    return Theme.orange
 
-            // Check if letter is in incorrectLetters (red)
             if (incorrectLetters.indexOf(text) !== -1)
-                return "#FF0000"  // Red
+                return Theme.red
 
-            // Default background color (unchanged)
             return backgroundColor
         }
     }
@@ -33,7 +28,6 @@ GlassPanel {
         anchors.centerIn: parent
         spacing: 2
 
-        // Row 1: A Z E R T Y U I O P
         Row {
             spacing: 5
             anchors.horizontalCenter: parent.horizontalCenter
@@ -47,7 +41,6 @@ GlassPanel {
             }
         }
 
-        // Row 2: Q S D F G H J K L M
         Row {
             spacing: 5
             anchors.horizontalCenter: parent.horizontalCenter
@@ -61,7 +54,6 @@ GlassPanel {
             }
         }
 
-        // Row 3: W X C V B N
         Row {
             spacing: 5
             anchors.horizontalCenter: parent.horizontalCenter

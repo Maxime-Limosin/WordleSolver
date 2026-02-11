@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import "Elements"
 import "Panels"
+import "Theme.js" as Theme
 
 Window {
     visible: true
