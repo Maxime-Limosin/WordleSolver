@@ -37,7 +37,6 @@ Window {
             spacing: panelSpacing
 
             RowLayout {
-                id: lettresRow
                 spacing: panelSpacing
 
                 ColumnLayout {
@@ -60,13 +59,14 @@ Window {
                 GuessedLetters {
                     Layout.alignment: Qt.AlignTop
                     Layout.fillHeight: true
-                    Layout.preferredWidth: 400
+                    Layout.preferredWidth: 300
                 }
             }
 
             WKeyboard {
+                Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 200
-                Layout.preferredWidth: lettresRow.width
+                Layout.preferredWidth: 500
             }
         }
 
