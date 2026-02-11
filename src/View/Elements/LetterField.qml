@@ -4,9 +4,9 @@ import QtQuick.Controls 2.5
 TextField {
     id: field
 
-    readonly property color backgroundColor: "#6A7D81"
-    readonly property color backgroundColorWhenLetterFilled: "#92EC13"
-    readonly property color borderColor: "#242424"
+    property color backgroundColor: "#6A7D81"
+    property color backgroundColorWhenLetterFilled: "#92EC13"
+    property color borderColor: "#242424"
 
     property bool textFilled: text.length === 1
 
