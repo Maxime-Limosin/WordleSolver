@@ -9,7 +9,8 @@ Item {
 
     // Create a new LetterField in the given column
     function createLetterFieldInColumn(column) {
-        if (column.children.length >= maxLetterFieldPerColumn)
+        let fields = column.children
+        if(fields.length >= maxLetterFieldPerColumn)
             return
 
         let component = Qt.createComponent("../Elements/LetterField.qml")
@@ -39,25 +40,24 @@ Item {
             handleLetterDeleted(field, column)
     }
 
-    // Check if we should add a new LetterField in the column
+    // Check if we should add a new LetterField in the column (excluding current field)
     function handleLetterAdded(field, column) {
-        // Check if letter already exists in the column (excluding current field)
         if (letterExistsInColumn(column, field.text, field)) {
             field.text = ""
             return
         }
 
-        // Letter is unique - add new field if this is the last one and limit not reached
+        // If letter is unique, add new field if this is the last one
         if (isLastFieldInColumn(field, column) && column.children.length < maxLetterFieldPerColumn)
             createLetterFieldInColumn(column)
     }
 
     // Check if we should delete the LetterField in the column
     function handleLetterDeleted(field, column) {
-        let children = column.children
+        let fields = column.children
 
         // Only destroy if there's more than one field
-        if (children.length > 1) {
+        if (fields.length > 1) {
             field.destroy()
 
             // Ensure there's always an empty field at the bottom
@@ -88,8 +88,8 @@ Item {
     }
 
     function isLastFieldInColumn(field, column) {
-        let children = column.children
-        return children[children.length - 1] === field
+        let fields = column.children
+        return fields[fields.length - 1] === field
     }
 
     function ensureEmptyFieldExists(column) {
@@ -98,11 +98,11 @@ Item {
     }
 
     function columnHasEmptyField(column) {
-        let children = column.children
-        for (let i = 0; i < children.length; i++) {
-            if (children[i].text === "") {
+        let fields = column.children
+
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].text === "")
                 return true
-            }
         }
         return false
     }

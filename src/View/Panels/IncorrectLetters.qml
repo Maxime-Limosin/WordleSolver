@@ -7,6 +7,7 @@ Item {
     property int titleMargin: 10
     property int maxIncorrectLetterField: 21
 
+    // Create a new LetterField in the given column
     function createLetterField() {
         let fields = gridLayout.children
         if(fields.length >= maxIncorrectLetterField)
@@ -30,6 +31,7 @@ Item {
         }
     }
 
+    // Function called when the text of a dynamically created LetterField changed
     function handleLetterInput(field) {
         if (field.text !== "")
             handleLetterAdded(field)
@@ -37,8 +39,8 @@ Item {
             handleLetterDeleted(field)
     }
 
+    // Check if we should delete the LetterField in the column (excluding current field)
     function handleLetterAdded(field) {
-        // Check if letter already exists (excluding current field)
         let fields = gridLayout.children
 
         // Check for duplicate
@@ -55,6 +57,7 @@ Item {
         ensureEmptyFieldExists()
     }
 
+    // Check if the letter exist in another LetterField of the column
     function handleLetterDeleted(field) {
         let fields = gridLayout.children
 
@@ -69,6 +72,7 @@ Item {
         }
     }
 
+    // Ensure there's always an empty LetterField at the end to let the user input a new letter
     function ensureEmptyFieldExists() {
         let fields = gridLayout.children
         let lastLetterField = fields[fields.length - 1]
