@@ -66,6 +66,18 @@ TextField {
         }
     }
 
+    // Handle text input
+    Keys.onPressed: function(event) {
+        if(event.text.length !== 1 || /[A-Za-z]/.test(event.text)) // Ensure a letter is pressed
+            return
+
+        // If field already has text, replace it
+        if (text.length === 1) {
+            text = event.text.toUpperCase()
+            event.accepted = true
+        }
+    }
+
     // Force to upper case
     onTextChanged: {
         if (text.length === 1)
