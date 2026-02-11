@@ -7,6 +7,29 @@ Item {
     property int titleMargin: 10
     property int maxLetterFieldPerColumn: 5
 
+    function updateGuessedLetters() {
+        let allLetters = []
+
+        // Loop through each column
+        for (let i = 0; i < columnRepeater.count; i++) {
+            let column = columnRepeater.itemAt(i)
+
+            if (!column)
+                continue
+
+            // Loop through each child in the column
+            for (let j = 0; j < column.children.length; j++) {
+                let letterField = column.children[j]
+
+                // Check if it's a LetterField (you might need to adjust this check)
+                if (letterField && letterField.text !== undefined && letterField.text !== "")
+                    allLetters.push({letter: letterField.text, column: i})
+            }
+
+            guessedLetters = allLetters
+        }
+    }
+
     // Create a new LetterField in the given column
     function createLetterFieldInColumn(column) {
         let fields = column.children
@@ -21,6 +44,11 @@ Item {
                                                          "Layout.alignment": Qt.AlignTop,
                                                          "backgroundColorWhenLetterFilled": "#efba34"
                                                      })
+
+            // Add the function after creation
+            letterField.lfTextChanged = function() {
+               updateGuessedLetters()
+            }
 
             // Set focus to the newly created field
             letterField.forceActiveFocus()
@@ -123,6 +151,7 @@ Item {
             anchors.top: parent.top; anchors.topMargin: 10
 
             Repeater {
+                id: columnRepeater
                 model: 5
 
                 ColumnLayout {

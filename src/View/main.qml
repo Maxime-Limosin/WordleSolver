@@ -21,6 +21,10 @@ Window {
 
     readonly property int panelSpacing: 30
 
+    property var solvedLetters: []    // [{letter: A, column: 0}, {letter: A, column: 1}, ... ]
+    property var guessedLetters: []   // [{letter: A, column: 0}, {letter: A, column: 1}, ... ]
+    property var incorrectLetters: [] // [A, B, C, ... ]
+
     AppBackground {
         id: appBg
         anchors.fill: parent

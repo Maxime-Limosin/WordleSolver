@@ -6,6 +6,19 @@ import "../Elements"
 Item {
     property int titleMargin: 10
 
+    function updateSolvedLetters() {
+        let inputedLetters = []
+
+        for (let i = 0; i < lettersRepeater.count; i++) {
+            let letterField = lettersRepeater.itemAt(i)
+
+            if (letterField && letterField.text !== "")
+                inputedLetters.push({letter: letterField.text, column: i})
+        }
+
+        solvedLetters = inputedLetters
+    }
+
     WText {
         id: title
         text: "Solved letters"
@@ -21,11 +34,16 @@ Item {
             anchors.centerIn: parent
 
             Repeater {
+                id: lettersRepeater
                 model: 5
 
                 LetterField {
                     Layout.preferredHeight: 60
                     Layout.preferredWidth: 40
+
+                    lfTextChanged: function() {
+                        updateSolvedLetters()
+                    }
                 }
             }
         }

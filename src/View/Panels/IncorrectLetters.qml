@@ -7,6 +7,19 @@ Item {
     property int titleMargin: 10
     property int maxIncorrectLetterField: 21
 
+    function updateIncorrectLetters() {
+        let letters = []
+
+        for (let i = 0; i < gridLayout.children.length; i++) {
+            let letterField = gridLayout.children[i]
+
+            if (letterField && letterField.text !== "")
+                letters.push(letterField.text)
+        }
+
+        incorrectLetters = letters
+    }
+
     // Create a new LetterField in the given column
     function createLetterField() {
         let fields = gridLayout.children
@@ -20,6 +33,11 @@ Item {
                                                          "Layout.preferredWidth": 40,
                                                          "backgroundColorWhenLetterFilled": "#ff5757"
                                                      })
+
+            // Add the function after creation
+            letterField.lfTextChanged = function() {
+               updateIncorrectLetters()
+            }
 
             // Set focus to the newly created field
             letterField.forceActiveFocus()

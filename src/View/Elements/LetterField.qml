@@ -10,6 +10,8 @@ TextField {
 
     property bool textFilled: text.length === 1
 
+    property var lfTextChanged: function() {} // Allow other component to add code to exectute when textChanged event is raised
+
     width: 40
     height: 60
     hoverEnabled: true
@@ -82,6 +84,8 @@ TextField {
     onTextChanged: {
         if (text.length === 1)
             text = text.toUpperCase()
+
+        lfTextChanged()
     }
 
     // Set the cursor at the end, even if the user clicked to the left of the letter

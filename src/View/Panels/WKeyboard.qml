@@ -6,8 +6,27 @@ import "../Elements"
 
 GlassPanel {
     component Key: LetterField {
-        backgroundColorWhenLetterFilled: backgroundColor
         enabled: backgroundColorWhenLetterFilled != backgroundColor
+        backgroundColorWhenLetterFilled: {
+            // Check if letter is in guessedLetters (orange)
+            for (var i = 0; i < solvedLetters.length; i++) {
+                if (solvedLetters[i].letter === text)
+                    return "#92EC13"  // Green
+            }
+
+            // Check if letter is in guessedLetters (orange)
+            for (var j = 0; j < guessedLetters.length; j++) {
+                if (guessedLetters[j].letter === text)
+                    return "#efba34"  // Orange
+            }
+
+            // Check if letter is in incorrectLetters (red)
+            if (incorrectLetters.indexOf(text) !== -1)
+                return "#FF0000"  // Red
+
+            // Default background color (unchanged)
+            return backgroundColor
+        }
     }
 
     Column {
