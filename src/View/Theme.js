@@ -10,8 +10,6 @@ let glassColor = "#22FFFFFF"
 let glassBorderColor = "#33FFFFFF"
 let glassShadow = "#14000000"
 
-// LetterField styling
-
 // Other styling colors
 let letterFieldBg = "#6A7D81"
 let letterFieldBorder = "#242424"

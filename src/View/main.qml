@@ -26,6 +26,14 @@ Window {
     property var guessedLetters: []   // [{letter: A, column: 0}, {letter: A, column: 1}, ... ]
     property var incorrectLetters: [] // [A, B, C, ... ]
 
+    onSolvedLettersChanged: refreshGameAnswers()
+    onGuessedLettersChanged: refreshGameAnswers()
+    onIncorrectLettersChanged: refreshGameAnswers()
+
+    function refreshGameAnswers() {
+        Solver.solveGame(solvedLetters, guessedLetters, incorrectLetters)
+    }
+
     AppBackground {
         id: appBg
         anchors.fill: parent
