@@ -26,9 +26,9 @@ Item {
                 if (letterField && letterField.text !== undefined && letterField.text !== "")
                     allLetters.push({letter: letterField.text, column: i})
             }
-
-            guessedLetters = allLetters
         }
+
+        guessedLetters = allLetters
     }
 
     // Create a new LetterField in the given column

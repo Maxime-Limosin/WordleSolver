@@ -84,10 +84,13 @@ TextField {
 
     // Force to upper case
     onTextChanged: {
-        if (text.length === 1)
-            text = text.toUpperCase()
+        if(text.length !== 1)
+            return
 
-        lfTextChanged()
+        if(text !== text.toUpperCase())
+            text = text.toUpperCase() // This will call onTextChanged once more as we change the text
+        else
+            lfTextChanged()
     }
 
     // Set the cursor at the end, even if the user clicked to the left of the letter
