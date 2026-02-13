@@ -72,7 +72,7 @@ TextField {
 
     // Handle text input
     Keys.onPressed: function(event) {
-        if(event.text.length !== 1 || /[A-Za-z]/.test(event.text)) // Ensure a letter is pressed
+        if(event.text.length !== 1 || !/[A-Za-z]/.test(event.text)) // Ensure a letter is pressed
             return
 
         // If field already has text, replace it
@@ -84,6 +84,9 @@ TextField {
 
     // Force to upper case
     onTextChanged: {
+        if(text === "")
+            lfTextChanged()
+
         if(text.length !== 1)
             return
 
