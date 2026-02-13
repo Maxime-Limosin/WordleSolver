@@ -19,6 +19,10 @@ set(PROJECT_SOURCES
         qml.qrc
         src/Controllers/solvercontroller.h
         src/Controllers/solvercontroller.cpp
+
+        src/Model/indexedLetter.h
+        src/Model/solver.h
+        src/Model/solver.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

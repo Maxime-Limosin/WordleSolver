@@ -7,34 +7,36 @@ SolverController::SolverController(QObject *parent)
 }
 
 
-void SolverController::solveGame(const QVariantList &solvedLetters, const QVariantList &guessedLetters, const QVariantList &incorrectLetters)
+void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters)
 {
-    qDebug() << "=== Solved Letters ===";
-    for (const QVariant &item : solvedLetters)
+    QList<IndexedLetter> solvedLetters, guessedLetters;
+    QList<QChar> incorrectLetters;
+
+    // Create solvedLetters
+    for (const QVariant &item : rawSolvedLetters)
     {
         QVariantMap letterData = item.toMap();
-        QString letter = letterData["letter"].toString();
-        int column = letterData["column"].toInt();
+        QChar letter = letterData["letter"].toString().at(0); // .toChar() expect a char in the JSON, but it's encoded as a string
+        int index = letterData["column"].toInt();
 
-        qDebug() << "Letter:" << letter << "| Column:" << column;
+        solvedLetters.push_back({ letter, index });
     }
 
-    qDebug() << "\n=== Guessed Letters ===";
-    for (const QVariant &item : guessedLetters)
+    // Create solvedLetters
+    for (const QVariant &item : rawGuessedLetters)
     {
         QVariantMap letterData = item.toMap();
-        QString letter = letterData["letter"].toString();
-        int column = letterData["column"].toInt();
+        QChar letter = letterData["letter"].toString().at(0);
+        int index = letterData["column"].toInt();
 
-        qDebug() << "Letter:" << letter << "| Column:" << column;
+        guessedLetters.push_back({ letter, index });
     }
 
-    qDebug() << "\n=== Incorrect Letters ===";
-    for (const QVariant &item : incorrectLetters)
-    {
-        QString letter = item.toString();
-        qDebug() << "Letter:" << letter;
-    }
+    // Create solvedLetters
+    for (const QVariant &item : rawIncorrectLetters)
+        incorrectLetters << item.toString().at(0);
 
-    qDebug() << "=====================\n";
+    // Call solveGame function
+    auto gameAnswers = _solver.solveGame(solvedLetters, guessedLetters, incorrectLetters);
+    emit answersChanged(gameAnswers);
 }

@@ -15,5 +15,6 @@
         <file>src/View/Panels/WKeyboard.qml</file>
         <file>src/View/Elements/LetterField.qml</file>
         <file>src/View/Theme.js</file>
+        <file>res/dictionnary_en_5_letters.txt</file>
     </qresource>
 </RCC>
