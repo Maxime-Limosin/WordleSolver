@@ -42,12 +42,8 @@ QStringList Solver::solveGame(const QList<IndexedLetter> &solvedLetters, const Q
 
 bool Solver::checkWordMatches(const QString &word, const QList<IndexedLetter> &solvedLetters, const QList<IndexedLetter> &guessedLetters, const QList<QChar> &incorrectLetters)
 {
-    qDebug() << "\n" << word;
-
     // Check if the word has every solved letter in the right position
     for(const auto &indexedLetter : solvedLetters) {
-        //qDebug() << indexedLetter.letter << indexedLetter.index;
-
         if(word[indexedLetter.index] != indexedLetter.letter)
             return false;
     }
@@ -55,17 +51,11 @@ bool Solver::checkWordMatches(const QString &word, const QList<IndexedLetter> &s
     // Check if the word has every guessed letter, but not in the corresponding index
     for(const auto &indexedLetter : guessedLetters)
     {
-        qDebug() << indexedLetter.letter << indexedLetter.index;
-
-        if(!word.contains(indexedLetter.letter)) {// If the letter is missing in the word
-            qDebug() << "Word doesn't containt letter";
+        if(!word.contains(indexedLetter.letter))// If the letter is missing in the word
             return false;
-        }
 
-        if(word.contains(indexedLetter.letter) && word[indexedLetter.index] == indexedLetter.letter) { // If the letter is in the incorrect index
-            qDebug() << "Contains word in wrong place:" << word[indexedLetter.index];
+        if(word.contains(indexedLetter.letter) && word[indexedLetter.index] == indexedLetter.letter) // If the letter is in the incorrect index
             return false;
-        }
     }
 
     // Check if the word doesn't have any of the incorrect letters
