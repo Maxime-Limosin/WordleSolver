@@ -5,6 +5,7 @@ let green = "#92EC13"
 let orange = "#efba34"
 let red = "#ff5757"
 let white = "white"
+let lightGray = "#d4d4d4"
 
 // GlassPanel styling
 let glassColor = "#22FFFFFF"

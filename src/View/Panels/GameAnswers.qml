@@ -1,33 +1,50 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.3
 
 import "../Elements"
 import "../Theme.js" as Theme
 
 Item {
-    property int titleMargin: 10
+    readonly property int titleMargin: 10
+    readonly property int titleAnimationDuration: 100 // Value in ms
+
+    property int numberOfAnswers: 0
 
     Connections {
         target: Solver
 
+        // Update the displayed text
         function onAnswersChanged(answers) {
-            // Update the displayed text
             let t = ""
             for(let i = 0; i < answers.length; i++)
                 t += answers[i] + "\n"
 
             answersText.text = t
+            numberOfAnswers = answers.length
         }
     }
 
-    WText {
-        id: title
-        text: "Possible answers"
+    RowLayout {
+        id: titleRow
+        spacing: 5
+
+        WText {
+            text: "Possible answers"
+            Layout.alignment: Qt.AlignBottom
+        }
+
+        WText {
+            text: numberOfAnswers === 0 ? "" : "(" + numberOfAnswers + ")"
+            color: Theme.lightGray
+            font.pointSize: 16
+            Layout.alignment: Qt.AlignBottom
+        }
     }
 
     GlassPanel {
         anchors.fill: parent
-        anchors.topMargin: title.height + titleMargin
+        anchors.topMargin: titleRow.height + titleMargin
 
         Flickable {
             contentWidth: width
