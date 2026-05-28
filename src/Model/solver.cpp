@@ -1,8 +1,7 @@
 #include "solver.h"
 #include <QDebug>
 
-Solver::Solver(QObject *parent)
-    : QObject{parent}, _dictionary(PATH_TO_DIC)
+Solver::Solver(): _dictionary(PATH_TO_DIC)
 {
     if (!_dictionary.open(QIODevice::ReadOnly | QIODevice::Text))
         qWarning() << "Failed to open dictionary:" << _dictionary.errorString();
@@ -25,7 +24,8 @@ QStringList Solver::solveGame(const QList<IndexedLetter> &solvedLetters, const Q
     QTextStream input(&_dictionary);
 
     // Iterate line by line over the huge file without keeping every line in memory
-    while (!input.atEnd()) {
+    while (!input.atEnd())
+    {
         QString word = input.readLine().trimmed().toUpper();
 
         if (word.isEmpty())

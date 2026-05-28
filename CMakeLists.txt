@@ -44,6 +44,7 @@ else()
     else()
         add_executable(WordleSolver
           ${PROJECT_SOURCES}
+          src/Model/entropycalculator.h src/Model/entropycalculator.cpp
         )
     endif()
 endif()

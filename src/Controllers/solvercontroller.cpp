@@ -3,9 +3,8 @@
 SolverController::SolverController(QObject *parent)
     : QObject{parent}
 {
-
+    _entropyCalculator.test();
 }
-
 
 void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters)
 {
@@ -22,7 +21,7 @@ void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVa
         solvedLetters.push_back({ letter, index });
     }
 
-    // Create solvedLetters
+    // Create guessedLetters
     for (const QVariant &item : rawGuessedLetters)
     {
         QVariantMap letterData = item.toMap();
@@ -32,11 +31,29 @@ void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVa
         guessedLetters.push_back({ letter, index });
     }
 
-    // Create solvedLetters
+    // Create incorrectLetters
     for (const QVariant &item : rawIncorrectLetters)
         incorrectLetters << item.toString().at(0);
 
-    // Call solveGame function
-    auto gameAnswers = _solver.solveGame(solvedLetters, guessedLetters, incorrectLetters);
-    emit answersChanged(gameAnswers);
+    // Filter candidates
+    /*auto candidates  = _solver.solveGame(solvedLetters, guessedLetters, incorrectLetters);
+
+    // Score each candidate and build a sorted QVariantList for QML
+    QMap<QString, double> scores = _entropyCalculator.scoreWords(candidates);
+
+    QVariantList gameAnswers;
+    gameAnswers.reserve(candidates.size());
+    for (const QString &word : candidates) {
+        QVariantMap entry;
+        entry["word"]    = word;
+        entry["entropy"] = scores.value(word, 0.0); // raw double, format it in QML
+        gameAnswers.append(entry);
+    }
+
+    // Sort by entropy descending (best guess first)
+    std::sort(gameAnswers.begin(), gameAnswers.end(), [](const QVariant &a, const QVariant &b) {
+        return a.toMap()["entropy"].toDouble() > b.toMap()["entropy"].toDouble();
+    });
+
+    emit answersChanged(gameAnswers);*/
 }

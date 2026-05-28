@@ -1,15 +1,13 @@
 #pragma once
 
-#include <QObject>
 #include <QFile>
-
 #include "indexedLetter.h"
 
-class Solver : public QObject
+class Solver
 {
-    Q_OBJECT
+
 public:
-    explicit Solver(QObject *parent = nullptr);
+    explicit Solver();
     ~Solver();
 
     QStringList solveGame(const QList<IndexedLetter> &solvedLetters, const QList<IndexedLetter> &guessedLetters, const QList<QChar> &incorrectLetters);

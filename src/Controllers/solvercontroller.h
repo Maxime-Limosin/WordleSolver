@@ -3,8 +3,8 @@
 #include <QObject>
 #include <QDebug>
 
-//#include "src/
 #include "src/Model/solver.h"
+#include "src/Model/entropycalculator.h"
 
 class SolverController : public QObject
 {
@@ -15,9 +15,10 @@ public:
     Q_INVOKABLE void solveGame(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters);
 
 signals:
-    void answersChanged(const QStringList& words);
+    void answersChanged(const QVariantList& gameAnswers);
 
 private:
     Solver _solver;
+    EntropyCalculator _entropyCalculator;
 };
 
