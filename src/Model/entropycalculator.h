@@ -12,6 +12,6 @@ public:
     void test();
 
 private:
-    QString computePattern(const QString &input, const QString &word)
+    QString computePattern(const QString &input, const QString &word);
 };
 
