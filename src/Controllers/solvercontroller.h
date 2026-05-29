@@ -12,7 +12,7 @@ class SolverController : public QObject
 public:
     explicit SolverController(QObject *parent = nullptr);
 
-    Q_INVOKABLE void solveGame(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters);
+    Q_INVOKABLE void solveGameAsync(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters);
 
 signals:
     void answersChanged(const QVariantList& gameAnswers);
@@ -20,5 +20,7 @@ signals:
 private:
     Solver _solver;
     EntropyCalculator _entropyCalculator;
+
+    void solveGame(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters);
 };
 

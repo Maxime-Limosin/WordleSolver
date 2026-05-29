@@ -31,7 +31,7 @@ Window {
     onIncorrectLettersChanged: refreshGameAnswers()
 
     function refreshGameAnswers() {
-        Solver.solveGame(solvedLetters, guessedLetters, incorrectLetters)
+        Solver.solveGameAsync(solvedLetters, guessedLetters, incorrectLetters)
     }
 
     AppBackground {

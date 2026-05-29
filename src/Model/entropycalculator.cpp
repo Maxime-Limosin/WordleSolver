@@ -1,31 +1,26 @@
 #include "entropycalculator.h"
 
 #include <QDebug>
+#include <cmath>
 
-QMap<QString, double> EntropyCalculator::scoreWords(const QStringList &a)
-{
-    return {};
-}
 
-void EntropyCalculator::test()
+QMap<QString, double> EntropyCalculator::scoreWords(const QStringList &possibleWords)
 {
     using std::log2;
 
-    //QStringList wordList = {"CRANE", "CRAVE", "TRACE", "BRACE"};
-    QStringList wordList = {"CRANE", "CRAVE", "TRACE", "BRACE", "FLOOD", "MOIST", "PYGMY"};
     QMap<QString, double> wordEntropies;
-    double numberOfWords = wordList.size();
+    double numberOfWords = possibleWords.size();
 
-    for (const auto &wordToTest : qAsConst(wordList))
+    for (const auto &wordToTest : qAsConst(possibleWords))
     {
         double wordToTestEntropy = 0;
         QMap<QString, int> patterns;
 
-        for(const auto &word: qAsConst(wordList))
+        for(const auto &word: qAsConst(possibleWords))
         {
             QString pattern = computePattern(wordToTest, word);
             if(pattern.isEmpty())
-                return;
+                continue;
 
             patterns[pattern]++;
         }
@@ -39,10 +34,7 @@ void EntropyCalculator::test()
         wordEntropies[wordToTest] = wordToTestEntropy;
     }
 
-    for (auto it = wordEntropies.keyValueBegin(); it != wordEntropies.keyValueEnd(); ++it)
-    {
-        qDebug() << it->first << it->second;
-    }
+    return wordEntropies;
 }
 
 QString EntropyCalculator::computePattern(const QString &input, const QString &word)

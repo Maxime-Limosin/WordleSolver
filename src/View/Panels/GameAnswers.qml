@@ -17,8 +17,10 @@ Item {
         // Update the displayed text
         function onAnswersChanged(answers) {
             let t = ""
-            for(let i = 0; i < answers.length; i++)
-                t += answers[i] + "\n"
+            for(let i = 0; i < answers.length; i++) {
+                let item = answers[i]
+                t += item["word"] + " (" + item["entropy"].toFixed(2) + " bits)\n"
+            }
 
             answersText.text = t
             numberOfAnswers = answers.length
