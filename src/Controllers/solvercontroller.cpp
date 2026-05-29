@@ -7,7 +7,15 @@ SolverController::SolverController(QObject *parent)
 
 void SolverController::solveGameAsync(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters)
 {
-    QtConcurrent::run([this, rawSolvedLetters, rawGuessedLetters, rawIncorrectLetters]
+    // If WorldleSolver is currently trying to solve the game, cancel it before running a new solver
+    if(_solveGameFuture.isRunning())
+    {
+        _cancelSolveGame = true;
+        _solveGameFuture.waitForFinished(); // Waiting for thread to finish before starting a new one
+        _cancelSolveGame = false;
+    }
+
+    _solveGameFuture = QtConcurrent::run([this, rawSolvedLetters, rawGuessedLetters, rawIncorrectLetters]
     {
         solveGame(rawSolvedLetters, rawGuessedLetters, rawIncorrectLetters);
     });
@@ -19,6 +27,8 @@ void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVa
 
     QList<IndexedLetter> solvedLetters, guessedLetters;
     QList<QChar> incorrectLetters;
+
+    emit solvingGame();
 
     // Create solvedLetters
     for (const QVariant &item : rawSolvedLetters)
@@ -48,7 +58,8 @@ void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVa
     auto candidates  = _solver.solveGame(solvedLetters, guessedLetters, incorrectLetters);
 
     // Score each candidate and build a sorted QVariantList for QML
-    QMap<QString, double> scores = _entropyCalculator.scoreWords(candidates);
+    // This function can take a lot of time: O(n²) complexity
+    QMap<QString, double> scores = _entropyCalculator.scoreWords(candidates, _cancelSolveGame);
 
     // Create and fill an object for QML with entropy results
     QVariantList gameAnswers;

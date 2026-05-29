@@ -4,7 +4,7 @@
 #include <cmath>
 
 
-QMap<QString, double> EntropyCalculator::scoreWords(const QStringList &possibleWords)
+QMap<QString, double> EntropyCalculator::scoreWords(const QStringList &possibleWords, std::atomic<bool> &cancelOperation)
 {
     using std::log2;
 
@@ -21,6 +21,9 @@ QMap<QString, double> EntropyCalculator::scoreWords(const QStringList &possibleW
             QString pattern = computePattern(wordToTest, word);
             if(pattern.isEmpty())
                 continue;
+
+            if(cancelOperation)
+                return wordEntropies;
 
             patterns[pattern]++;
         }

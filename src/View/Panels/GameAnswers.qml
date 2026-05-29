@@ -10,6 +10,7 @@ Item {
     readonly property int titleAnimationDuration: 100 // Value in ms
 
     property int numberOfAnswers: 0
+    property bool solvingGame: false
 
     Connections {
         target: Solver
@@ -24,6 +25,11 @@ Item {
 
             answersText.text = t
             numberOfAnswers = answers.length
+            solvingGame = false
+        }
+
+        function onSolvingGame() {
+            solvingGame = true
         }
     }
 
@@ -32,6 +38,7 @@ Item {
         spacing: 5
 
         WText {
+            id: possibleAnswsersText
             text: "Possible answers"
             Layout.alignment: Qt.AlignBottom
         }
@@ -41,6 +48,13 @@ Item {
             color: Theme.lightGray
             font.pointSize: 16
             Layout.alignment: Qt.AlignBottom
+        }
+
+        WBusyIndicator {
+            height: possibleAnswsersText.height
+            width: height
+            Layout.alignment: Qt.AlignRight
+            opacity: solvingGame ? 1 : 0
         }
     }
 

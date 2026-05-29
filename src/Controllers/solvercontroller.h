@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QFuture>
 #include <QDebug>
 
 #include "src/Model/solver.h"
@@ -15,11 +16,18 @@ public:
     Q_INVOKABLE void solveGameAsync(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters);
 
 signals:
+    void solvingGame();
     void answersChanged(const QVariantList& gameAnswers);
 
 private:
-    Solver _solver;
+    // Classes to solve the game
+    Solver            _solver;
     EntropyCalculator _entropyCalculator;
+
+    // Variables for solver cancellation, as it's running async
+    // In the solveGame function, the entropy calculation can be really long: O(n²) were n is the number of inputed words
+    QFuture<void>     _solveGameFuture;
+    std::atomic<bool> _cancelSolveGame {false};
 
     void solveGame(const QVariantList &rawSolvedLetters, const QVariantList &rawGuessedLetters, const QVariantList &rawIncorrectLetters);
 };
