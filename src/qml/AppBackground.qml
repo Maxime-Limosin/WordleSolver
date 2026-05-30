@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick
 
 Item {
     property alias backgroundItem: bgImage // Expose the image that needs to be blurried

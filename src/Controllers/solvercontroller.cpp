@@ -64,7 +64,7 @@ void SolverController::solveGame(const QVariantList &rawSolvedLetters, const QVa
     // Create and fill an object for QML with entropy results
     QVariantList gameAnswers;
     gameAnswers.reserve(candidates.size());
-    for (const QString &word : qAsConst(candidates))
+    foreach (const QString &word, candidates)
     {
         QVariantMap entry;
         entry["word"]    = word;

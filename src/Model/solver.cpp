@@ -1,6 +1,7 @@
 #include "solver.h"
 #include <QDebug>
 
+#include <QDirIterator>
 Solver::Solver(): _dictionary(PATH_TO_DIC)
 {
     if (!_dictionary.open(QIODevice::ReadOnly | QIODevice::Text))

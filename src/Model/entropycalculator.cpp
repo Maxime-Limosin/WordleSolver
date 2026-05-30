@@ -11,12 +11,12 @@ QMap<QString, double> EntropyCalculator::scoreWords(const QStringList &possibleW
     QMap<QString, double> wordEntropies;
     double numberOfWords = possibleWords.size();
 
-    for (const auto &wordToTest : qAsConst(possibleWords))
+    foreach (const auto &wordToTest, possibleWords)
     {
         double wordToTestEntropy = 0;
         QMap<QString, int> patterns;
 
-        for(const auto &word: qAsConst(possibleWords))
+        foreach(const auto &word, possibleWords)
         {
             QString pattern = computePattern(wordToTest, word);
             if(pattern.isEmpty())

@@ -1,8 +1,9 @@
 #pragma once
 
 #include <QObject>
-#include <QFuture>
 #include <QDebug>
+#include <QFuture>
+#include <QVariantList>
 
 #include "src/Model/solver.h"
 #include "src/Model/entropycalculator.h"

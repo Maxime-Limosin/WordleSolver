@@ -1,70 +1,69 @@
-cmake_minimum_required(VERSION 3.14)
-
+cmake_minimum_required(VERSION 3.16)
 project(WordleSolver VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Core5Compat QuickControls2)
+qt_standard_project_setup()
 
-set(PROJECT_SOURCES
-        main.cpp
-        qml.qrc
-        src/Controllers/solvercontroller.h
-        src/Controllers/solvercontroller.cpp
+# Suppress Qt6 QML policy warnings
+qt_policy(SET QTP0001 NEW)
+qt_policy(SET QTP0004 NEW)
 
-        src/Model/indexedLetter.h
-        src/Model/solver.h
-        src/Model/solver.cpp
+qt_add_executable(WordleSolver
+    main.cpp
+    src/Controllers/solvercontroller.h
+    src/Controllers/solvercontroller.cpp
+    src/Model/indexedLetter.h
+    src/Model/solver.h
+    src/Model/solver.cpp
+    src/Model/entropycalculator.h
+    src/Model/entropycalculator.cpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(WordleSolver
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET WordleSolver APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(WordleSolver SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(WordleSolver
-          ${PROJECT_SOURCES}
-          src/Model/entropycalculator.h src/Model/entropycalculator.cpp
-        )
-    endif()
-endif()
+qt_add_qml_module(WordleSolver
+    URI WordleSolver
+    VERSION 1.0
+    QML_FILES
+        src/qml/Main.qml
+        src/qml/AppBackground.qml
+        src/qml/Elements/GlassPanel.qml
+        src/qml/Elements/LetterField.qml
+        src/qml/Elements/WBusyIndicator.qml
+        src/qml/Elements/WText.qml
+        src/qml/Panels/GameAnswers.qml
+        src/qml/Panels/GuessedLetters.qml
+        src/qml/Panels/IncorrectLetters.qml
+        src/qml/Panels/SolvedLetters.qml
+        src/qml/Panels/WKeyboard.qml
+    RESOURCES
+        src/qml/Theme.js
+)
+
+qt_add_resources(WordleSolver "app_resources"
+    PREFIX "/"
+    FILES
+        res/dictionnary_en_5_letters.txt
+        res/background.png
+        res/Icons/icon.png
+        res/Icons/icon2Raw.png
+        res/Icons/iconRaw.png
+)
 
 target_link_libraries(WordleSolver
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+    PRIVATE
+        Qt6::Core
+        Qt6::Quick
+        Qt6::Core5Compat
+        Qt6::QuickControls2
+)
 
 set_target_properties(WordleSolver PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
 install(TARGETS WordleSolver
     BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_import_qml_plugins(WordleSolver)
-    qt_finalize_executable(WordleSolver)
-endif()
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

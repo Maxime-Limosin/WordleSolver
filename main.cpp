@@ -2,32 +2,26 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QIcon>
+#include <QQuickStyle>
 
 #include "src/Controllers/solvercontroller.h"
 
 int main(int argc, char *argv[])
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
-
     SolverController solverController;
 
+    QQuickStyle::setStyle("Basic");
     QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+
     app.setWindowIcon(QIcon(":/res/Icons/icon.png"));
     app.setApplicationName("WordleSolver");
 
     // Expose controller to QML
-    QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Solver", &solverController);
 
-    const QUrl url(QStringLiteral("qrc:/src/View/main.qml")); // Load main.qml
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
+    // Load main.qml from the WordleSolver QML module
+    engine.loadFromModule("WordleSolver", "Main");
 
-    engine.load(url);
     return app.exec();
 }
